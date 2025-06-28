@@ -35,7 +35,7 @@ interface DashboardData {
 }
 
 // API functions (keeping your existing structure)
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = 'https://satisfying-shell-megaraptor.glitch.me/';
 
 async function fetchAnalyticsSummary(): Promise<AnalyticsSummary> {
   try {
