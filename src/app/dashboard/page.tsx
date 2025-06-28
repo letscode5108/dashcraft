@@ -324,7 +324,7 @@ export default function DashboardWidget() {
               icon: DollarSign,
               gradient: "from-blue-700 to-blue-500",
               delay: "0.3s",
-              onClick: handleViewActivityDetails
+              onClick: handleViewRevenueDetails
               
             }
           ].map((card, index) => {
