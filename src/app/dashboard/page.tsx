@@ -86,9 +86,30 @@ export default function DashboardWidget() {
   const [error, setError] = useState<string | null>(null);
   const [showNotifications, setShowNotifications] = useState(false);
   const [animateCards, setAnimateCards] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
+    useEffect(() => {
+    const checkAuth = () => {
+      const authStatus = localStorage.getItem('isAuthenticated');
+      
+      if (authStatus !== 'true') {
+        router.push('/Login');
+        return;
+      }
+      
+      setIsAuthenticated(true);
+    };
+
+    checkAuth();
+  }, [router]);
+
+
+
+
   useEffect(() => {
+     if (!isAuthenticated) return;
+
     const loadData = async () => {
       try {
         setLoading(true);
@@ -103,7 +124,19 @@ export default function DashboardWidget() {
     };
 
     loadData();
-  }, []);
+  }, [isAuthenticated]);
+
+   if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-white">Checking authentication...</p>
+        </div>
+      </div>
+    );
+  }
+
 
   const formatTimestamp = (timestamp: string) => {
     return new Date(timestamp).toLocaleString();
@@ -138,7 +171,10 @@ export default function DashboardWidget() {
   const handleViewRevenueDetails = () => {
     router.push('/dashboard/revenue');
   };
-
+   const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    router.push('/Login');
+  };
  
  
  
@@ -222,6 +258,18 @@ export default function DashboardWidget() {
               Real-time insights and analytics
             </p>
           </div>
+
+             
+          <div className="flex items-center space-x-4">
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="bg-red-500/20 hover:bg-red-500/30 text-white px-4 py-2 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 border border-red-400/30 hover:border-red-400/50"
+            >
+              Logout
+            </button>
+               </div>
+
           
           {/* Notification Bell with View More */}
           <div className="relative animate-bounce-in" style={{ animationDelay: '0.5s' }}>
