@@ -34,7 +34,7 @@ interface DashboardData {
   notifications: Notification[];
 }
 
-// API functions (keeping your existing structure)
+
 const API_BASE_URL = 'https://satisfying-shell-megaraptor.glitch.me/';
 
 async function fetchAnalyticsSummary(): Promise<AnalyticsSummary> {
