@@ -35,7 +35,7 @@ interface DashboardData {
 }
 
 
-const API_BASE_URL = 'https://satisfying-shell-megaraptor.glitch.me/';
+const API_BASE_URL = 'https://my-json-server-1.onrender.com';
 
 async function fetchAnalyticsSummary(): Promise<AnalyticsSummary> {
   try {
