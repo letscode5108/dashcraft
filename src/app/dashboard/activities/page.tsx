@@ -1,15 +1,29 @@
 "use client"
 
 import React, { useState } from 'react';
-import { ArrowLeft, Activity, UserPlus, DollarSign, TrendingUp, Settings, Clock, User, Filter, Search, Calendar } from 'lucide-react';
+import { ArrowLeft, Activity, UserPlus, DollarSign, Settings, User, Search } from 'lucide-react';
 
-const ActivitiesDetailPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all');
-  const [timeFilter, setTimeFilter] = useState('today');
+// Type definitions
+interface Activity {
+  id: string;
+  type: 'New User' | 'Transaction' | 'Login' | 'Update';
+  description: string;
+  timestamp: string;
+  user: string;
+  details: string;
+  importance: 'high' | 'medium' | 'low';
+}
+
+type ActivityType = 'all' | 'New User' | 'Transaction' | 'Login' | 'Update';
+type TimeFilter = 'today' | 'week' | 'month';
+
+const ActivitiesDetailPage: React.FC = () => {
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [filterType, setFilterType] = useState<ActivityType>('all');
+  const [timeFilter, setTimeFilter] = useState<TimeFilter>('today');
 
   // Extended activity data based on your dashboard
-  const activities = [
+  const activities: Activity[] = [
     {
       id: "act1",
       type: "New User",
@@ -84,14 +98,7 @@ const ActivitiesDetailPage = () => {
     }
   ];
 
- 
- 
- 
- 
- 
- 
-
-  const getActivityIcon = (type) => {
+  const getActivityIcon = (type: Activity['type']): React.ReactElement => {
     switch (type) {
       case 'New User': return <UserPlus className="w-5 h-5" />;
       case 'Transaction': return <DollarSign className="w-5 h-5" />;
@@ -101,7 +108,7 @@ const ActivitiesDetailPage = () => {
     }
   };
 
-  const getActivityColor = (type) => {
+  const getActivityColor = (type: Activity['type']): string => {
     switch (type) {
       case 'New User': return 'from-green-500 to-emerald-400';
       case 'Transaction': return 'from-blue-500 to-cyan-400';
@@ -111,7 +118,7 @@ const ActivitiesDetailPage = () => {
     }
   };
 
-  const getImportanceColor = (importance) => {
+  const getImportanceColor = (importance: Activity['importance']): string => {
     switch (importance) {
       case 'high': return 'bg-red-500';
       case 'medium': return 'bg-yellow-500';
@@ -119,7 +126,7 @@ const ActivitiesDetailPage = () => {
     }
   };
 
-  const formatTimestamp = (timestamp) => {
+  const formatTimestamp = (timestamp: string): { time: string; date: string } => {
     const date = new Date(timestamp);
     return {
       time: date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
@@ -127,14 +134,30 @@ const ActivitiesDetailPage = () => {
     };
   };
 
-  const filteredActivities = activities.filter(activity => {
+  const filteredActivities = activities.filter((activity: Activity) => {
     const matchesSearch = activity.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          activity.user.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesType = filterType === 'all' || activity.type === filterType;
     return matchesSearch && matchesType;
   });
 
-  const activityTypes = ['all', 'New User', 'Transaction', 'Login', 'Update'];
+  const activityTypes: ActivityType[] = ['all', 'New User', 'Transaction', 'Login', 'Update'];
+
+  const handleBackClick = (): void => {
+    window.history.back();
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleFilterChange = (type: ActivityType): void => {
+    setFilterType(type);
+  };
+
+  const handleTimeFilterChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+    setTimeFilter(e.target.value as TimeFilter);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-6">
@@ -143,7 +166,7 @@ const ActivitiesDetailPage = () => {
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-4">
             <button 
-              onClick={() => window.history.back()}
+              onClick={handleBackClick}
               className="bg-white/10 hover:bg-white/20 backdrop-blur-xl p-3 rounded-xl transition-all duration-300 hover:scale-110 text-white border border-white/10"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -164,16 +187,16 @@ const ActivitiesDetailPage = () => {
                 type="text"
                 placeholder="Search activities by description or user..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={handleSearchChange}
                 className="w-full bg-white/10 border border-white/20 rounded-xl pl-10 pr-4 py-3 text-white placeholder-white/50 focus:outline-none focus:border-blue-400 transition-colors"
               />
             </div>
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex bg-white/10 rounded-xl p-1 border border-white/20">
-                {activityTypes.map((type) => (
+                {activityTypes.map((type: ActivityType) => (
                   <button
                     key={type}
-                    onClick={() => setFilterType(type)}
+                    onClick={() => handleFilterChange(type)}
                     className={`px-3 py-2 rounded-lg text-sm transition-all duration-300 whitespace-nowrap ${
                       filterType === type 
                         ? 'bg-blue-500 text-white' 
@@ -186,7 +209,7 @@ const ActivitiesDetailPage = () => {
               </div>
               <select 
                 value={timeFilter}
-                onChange={(e) => setTimeFilter(e.target.value)}
+                onChange={handleTimeFilterChange}
                 className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-400 transition-colors"
               >
                 <option value="today">Today</option>
@@ -200,7 +223,7 @@ const ActivitiesDetailPage = () => {
         {/* Activities Timeline */}
         <div className="bg-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/10">
           <div className="space-y-4">
-            {filteredActivities.map((activity, index) => {
+            {filteredActivities.map((activity: Activity) => {
               const timestamp = formatTimestamp(activity.timestamp);
               return (
                 <div 
