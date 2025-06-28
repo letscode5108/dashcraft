@@ -391,7 +391,7 @@ export default function DashboardWidget() {
             </div>
             
             <div className="space-y-4">
-              {analyticsSummary.recentActivities.slice(0, 3).map((activity, index) => (
+              {analyticsSummary.recentActivities.slice(0, 4).map((activity, index) => (
                 <div 
                   key={activity.id} 
                   className="group flex items-center space-x-6 p-6 bg-white/5 rounded-2xl hover:bg-white/10 transition-all duration-500 transform hover:scale-102 hover:translate-x-2 border border-white/5 hover:border-white/10 animate-slide-in-right cursor-pointer"
