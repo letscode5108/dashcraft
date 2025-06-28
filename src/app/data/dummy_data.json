@@ -1,0 +1,50 @@
+{
+  "analyticsSummary": {
+    "widgetTitle": "Today's Performance Overview",
+    "totalUsers": 12345,
+    "newSignupsToday": 78,
+    "activeUsers": 5678,
+    "revenueToday": "$12,450",
+    "conversionRate": "4.2%",
+    "recentActivities": [
+      {
+        "id": "act1",
+        "type": "New User",
+        "description": "User 'JohnDoe' signed up.",
+        "timestamp": "2025-06-24T09:30:00Z"
+      },
+      {
+        "id": "act2",
+        "type": "Transaction",
+        "description": "Sale of Pro Plan to 'Acme Corp'.",
+        "timestamp": "2025-06-24T09:15:00Z"
+      },
+      {
+        "id": "act3",
+        "type": "Login",
+        "description": "User 'JaneSmith' logged in.",
+        "timestamp": "2025-06-24T08:50:00Z"
+      },
+      {
+        "id": "act4",
+        "type": "Update",
+        "description": "Dashboard settings updated by 'AdminUser'.",
+        "timestamp": "2025-06-24T08:20:00Z"
+      }
+    ]
+  },
+  "notifications": [
+    {
+      "id": "notif1",
+      "message": "Your free trial ends in 3 days!",
+      "severity": "high",
+      "read": false
+    },
+    {
+      "id": "notif2",
+      "message": "New feature: Advanced Reporting is now available.",
+      "severity": "info",
+      "read": true
+    }
+  ]
+}
