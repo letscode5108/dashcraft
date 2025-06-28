@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "json-server": "json-server --watch ./src/app/data/dummy_data.json --port 3001"
+    "json-server": "json-server --watch ./src/app/data/db.json --port 3001"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
