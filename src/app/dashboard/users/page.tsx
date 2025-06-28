@@ -80,11 +80,11 @@ const UsersDetailPage = () => {
     return matchesSearch && matchesFilter;
   });
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string): string => {
     return status === 'active' ? 'bg-green-500' : 'bg-gray-500';
   };
 
-  const getPlanColor = (plan) => {
+  const getPlanColor = (plan: string): string => {
     switch (plan) {
       case 'Enterprise': return 'bg-purple-500';
       case 'Pro': return 'bg-blue-500';
