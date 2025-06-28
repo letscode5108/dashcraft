@@ -50,18 +50,22 @@ export default function LoginPage() {
     setLoading(false);
   };
 
-  const handleInputChange = (e) => {
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value
-    });
-  };
+ 
+ const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setCredentials({
+    ...credentials,
+    [e.target.name]: e.target.value
+  });
+};
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleLogin();
-    }
-  };
+const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  if (e.key === 'Enter') {
+    handleLogin();
+  }
+};
+ 
+
+ 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center p-4">
